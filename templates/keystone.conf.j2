@@ -1,0 +1,23 @@
+[DEFAULT]
+admin_token = {{ osks_adm_token }}
+verbose = {{ osks_verbose|default('False') }}
+{% if osks_pub_ep is defined %}public_endpoint = {{ osks_pub_ep }}{% endif %}
+{% if osks_adm_ep is defined %}admin_endpoint = {{ osks_adm_ep }}{% endif %}
+
+{% if osks_db_conn is defined %}
+[database]
+connection = {{osks_db_conn}}
+{% endif %}
+
+{% if osks_memcache %}
+[memcache]
+servers = {{osks_memcache%}
+{% endif %}
+
+[revoke]
+driver = keystone.contrib.revoke.backends.sql.Revoke
+
+[token]
+provider = keystone.token.providers.uuid.Provider
+driver = keystone.token.persistence.backends.memcache.Token
+
