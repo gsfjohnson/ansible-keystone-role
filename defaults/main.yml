@@ -1,0 +1,12 @@
+---
+
+# osks_admin_token: ADMIN
+# osks_verbose: false
+# osks_public_endpoint:
+# osks_admin_endpoint:
+# osks_db_connection: asd
+# osks_memcache_servers: localhost:11211
+# osks_revoke_driver: keystone.contrib.revoke.backends.sql.Revoke
+# osks_token_provider: keystone.token.providers.uuid.Provider
+# osks_token_driver: keystone.token.persistence.backends.memcache.Token
+
