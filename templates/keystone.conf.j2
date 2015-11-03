@@ -24,7 +24,7 @@ admin_token = {{ osks_admin_token | default('ADMIN') }}
 # http://server:5000/v3/users will default to http://server:5000. You should
 # only need to set this value if the base URL contains a path (e.g. /prefix/v3)
 # or the endpoint should be found on a different server. (string value)
-{% if osks_public_endpoint is defined and osks_public_endpoint is not None %}
+{% if osks_public_endpoint is defined %}
 public_endpoint = {{osks_public_endpoint}}
 {% else %}
 #public_endpoint = <None>
@@ -36,7 +36,7 @@ public_endpoint = {{osks_public_endpoint}}
 # will default to http://server:35357. You should only need to set this value
 # if the base URL contains a path (e.g. /prefix/v3) or the endpoint should be
 # found on a different server. (string value)
-{% if osks_admin_endpoint is defined and osks_admin_endpoint is not None %}
+{% if osks_admin_endpoint is defined %}
 admin_endpoint = {{osks_admin_endpoint}}
 {% else %}
 #admin_endpoint = <None>
@@ -424,7 +424,7 @@ verbose = {{osks_verbose|default('false')}}
 # Deprecated group/name - [DEFAULT]/sql_connection
 # Deprecated group/name - [DATABASE]/sql_connection
 # Deprecated group/name - [sql]/connection
-{% if osks_db_connection is defined and osks_db_connection is not None %}
+{% if osks_db_connection is defined %}
 connection = {{osks_db_connection}}
 {% else %}
 #connection = mysql://keystone:keystone@localhost/keystone
@@ -1135,7 +1135,7 @@ connection = {{osks_db_connection}}
 #
 
 # Memcache servers in the format of "host:port". (list value)
-{% if osks_memcache_servers is defined and osks_memcache_servers is not None %}
+{% if osks_memcache_servers is defined %}
 servers = {{osks_memcache_servers}}
 {% else %}
 #servers = localhost:11211
@@ -1510,7 +1510,7 @@ servers = {{osks_memcache_servers}}
 
 # An implementation of the backend for persisting revocation events. (string
 # value)
-{% if osks_revoke_driver is defined and osks_revoke_driver is not None %}
+{% if osks_revoke_driver is defined %}
 driver = {{osks_revoke_driver}}
 {% else %}
 #driver = keystone.contrib.revoke.backends.sql.Revoke
@@ -1703,14 +1703,14 @@ driver = {{osks_revoke_driver}}
 # Controls the token construction, validation, and revocation operations. Core
 # providers are "keystone.token.providers.[fernet|pkiz|pki|uuid].Provider".
 # (string value)
-{% if osks_token_provider is defined and osks_token_provider is not None %}
+{% if osks_token_provider is defined %}
 provider = {{osks_token_provider}}
 {% else %}
 #provider = keystone.token.providers.uuid.Provider
 {% endif %}
 
 # Token persistence backend driver. (string value)
-{% if osks_token_driver is defined and osks_token_driver is not None %}
+{% if osks_token_driver is defined %}
 driver = {{osks_token_driver}}
 {% else %}
 #driver = keystone.token.persistence.backends.sql.Token
