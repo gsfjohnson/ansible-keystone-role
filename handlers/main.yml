@@ -1,0 +1,7 @@
+---
+
+- name: svc restart osks
+  service:
+    name: httpd
+    state: restarted
+
