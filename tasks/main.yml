@@ -27,8 +27,10 @@
     - ssl
     - wsgi-keystone
     - reverse-proxy_keystone
-  notify: svc restart httpd
+  when: 0
+  notify: svc restart osks
 
 - name: httpd start, enable
   service: name=httpd state={{httpd_svc_state}} enabled={{httpd_svc_enabled}}
+  when: 0
 
