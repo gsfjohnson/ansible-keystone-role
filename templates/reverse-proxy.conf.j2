@@ -1,0 +1,3 @@
+{% for rp in httpd_conf_reverseproxy %}
+ProxyPass {{rp.path}} {{rp.desturl}}
+{% endfor %}

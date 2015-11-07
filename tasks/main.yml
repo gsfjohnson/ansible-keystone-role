@@ -1,36 +1,4 @@
 ---
 
-- name: install pkg
-  yum: pkg={{item}} state=installed
-  with_items:
-    - openstack-keystone
-    - mod_wsgi
-    - mod_ssl
-    - python-openstackclient
-    - memcached
-    - python-memcached
-
-- name: update conf
-  template:
-    src: keystone.conf.j2
-    dest: /etc/keystone/keystone.conf
-    user: root
-    group: keystone
-    mode: 0640
-  notify: svc restart osks
-
-- name: httpd conf.d
-  template:
-    src: "ctrl-{{item}}.conf.j2"
-    dest: "/etc/httpd/conf.d/{{item}}.conf"
-  with_items:
-    - ssl
-    - wsgi-keystone
-    - reverse-proxy_keystone
-  when: 0
-  notify: svc restart osks
-
-- name: httpd start, enable
-  service: name=httpd state={{httpd_svc_state}} enabled={{httpd_svc_enabled}}
-  when: 0
-
+- include: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'

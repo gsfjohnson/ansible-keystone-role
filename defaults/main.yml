@@ -10,3 +10,34 @@
 # osks_token_provider: keystone.token.providers.uuid.Provider
 # osks_token_driver: keystone.token.persistence.backends.memcache.Token
 
+httpd_svc_state: started
+httpd_svc_enabled: yes
+
+httpd_pkg_name: httpd
+httpd_pkg_state: installed
+
+httpd_ssl: False
+httpd_ssl_certs: []
+#  - filename: localhost.key
+#    type: private
+#    certificate:
+#      - "-----BEGIN RSA PRIVATE KEY-----"
+#      - 5vt9jZI9hc10Jl7TwIfF9jyAkeHan3M2ill10qtfQsyv0/cZn043ww==
+#      - "-----END RSA PRIVATE KEY-----"
+#  - filename: localhost.crt
+#    type: certs
+#    certificate:
+#      - "-----BEGIN CERTIFICATE-----"
+#      - 5vt9jZI9hc10Jl7TwIfF9jyAkeHan3M2ill10qtfQsyv0/cZn043ww==
+#      - "-----END CERTIFICATE-----"
+httpd_SSLProtocol:
+  - all
+  - "-SSLv2"
+httpd_SSLCipherSuite:
+  - name: HIGH
+  - name: MEDIUM
+  - name: "!aNULL"
+  - name: "!MD5"
+httpd_SSLCertificateFile: /etc/pki/tls/certs/localhost.crt
+httpd_SSLCertificateKeyFile: /etc/pki/tls/private/localhost.key
+

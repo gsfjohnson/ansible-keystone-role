@@ -1,0 +1,44 @@
+---
+
+- name: install pkgs
+  yum:
+    pkg={{item}}
+    state={{osks_pkg_state}}
+  with_items:
+    - openstack-keystone
+    - mod_wsgi
+    - mod_ssl
+    - python-openstackclient
+    - memcached
+    - python-memcached
+
+- name: keystone.conf
+  template:
+    src: keystone.conf.j2
+    dest: /etc/keystone/keystone.conf
+    user: root
+    group: keystone
+    mode: 0640
+  notify: svc restart httpd
+
+- name: httpd ssl.conf
+  template:
+    src: "{{ansible_os_family}}-{{ansible_distribution_major_version}}.ssl.conf.j2"
+    dest: "/etc/httpd/conf.d/ssl.conf"
+  when: httpd_pkg_name is defined
+  notify: svc restart httpd
+
+- name: httpd wsgi_keystone.conf
+  template:
+    src: "wsgi_keystone.conf.j2"
+    dest: "/etc/httpd/conf.d/wsgi_keystone.conf"
+  when: httpd_pkg_name is defined
+  notify: svc restart httpd
+
+- name: httpd start, enable
+  service:
+    name={{httpd_pkg_name}}
+    state={{httpd_svc_state}}
+    enabled={{httpd_svc_enabled}}
+  when: httpd_pkg_name is defined
+
