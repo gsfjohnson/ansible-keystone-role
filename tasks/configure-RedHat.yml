@@ -16,4 +16,8 @@
     - localhost
     - '%'
 
+- name: keystone-manage db_sync
+  shell: keystone-manage db_sync
+  become: True
+  become_user: keystone
 

@@ -24,6 +24,7 @@ memcached_svc_name: memcached
 memcached_svc_state: started
 memcached_svc_enabled: True
 
+httpd_svc_name: httpd
 httpd_svc_state: started
 httpd_svc_enabled: yes
 

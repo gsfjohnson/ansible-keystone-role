@@ -49,7 +49,7 @@
   template:
     src: "{{ansible_os_family}}-{{ansible_distribution_major_version}}-ssl.conf.j2"
     dest: "/etc/httpd/conf.d/ssl.conf"
-  when: httpd_pkg_name is defined
+  when: httpd_ssl is defined and httpd_ssl
   notify: svc restart httpd
 
 - name: httpd wsgi_keystone.conf
@@ -58,9 +58,6 @@
     dest: "/etc/httpd/conf.d/wsgi-keystone.conf"
   when: httpd_pkg_name is defined
   notify: svc restart httpd
-
-- name: keystone-manage db_sync
-  shell: "su -s /bin/sh -c 'keystone-manage db_sync' keystone"
 
 - name: create cgi-bin
   file:
