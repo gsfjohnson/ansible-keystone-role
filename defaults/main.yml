@@ -1,6 +1,9 @@
 ---
 
 osks_os: kilo
+rdo_pkg_url: "https://repos.fedorapeople.org/repos/openstack/openstack-kilo/rdo-release-kilo-1.noarch.rpm"
+
+osks_pkg_state: present
 
 osks_db_name: keystone
 osks_db_pass: somethingmoresecurethanthishopefully

@@ -1,7 +1,11 @@
 ---
 
-- name: svc restart osks
+- name: svc restart httpd
   service:
     name: httpd
     state: restarted
 
+- name: svc restart memcached
+  service:
+    name: memcached
+    state: restarted
