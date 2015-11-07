@@ -1,14 +1,25 @@
 ---
 
+osks_os: kilo
+
+osks_db_name: keystone
+osks_db_pass: somethingmoresecurethanthishopefully
+
 # osks_admin_token: ADMIN
 # osks_verbose: false
 # osks_public_endpoint:
 # osks_admin_endpoint:
 # osks_db_connection: asd
-# osks_memcache_servers: localhost:11211
 # osks_revoke_driver: keystone.contrib.revoke.backends.sql.Revoke
 # osks_token_provider: keystone.token.providers.uuid.Provider
 # osks_token_driver: keystone.token.persistence.backends.memcache.Token
+
+osks_memcached: True
+osks_memcache_servers: localhost:11211
+memcached_pkg_state: installed
+memcached_svc_name: memcached
+memcached_svc_state: started
+memcached_svc_enabled: True
 
 httpd_svc_state: started
 httpd_svc_enabled: yes

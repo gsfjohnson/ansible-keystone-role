@@ -1,0 +1,19 @@
+---
+
+- name: create mysql database
+  mysql_db:
+    name={{osks_db_name}}
+    state=present
+
+- name: grant mysql access
+  mysql_user:
+    name={{osks_db_user}}
+    password={{osks_db_pass}}
+    priv={{osks_db_name}}.*:ALL
+    host={{item}}
+    state=present
+  with_items:
+    - localhost
+    - '%'
+
+

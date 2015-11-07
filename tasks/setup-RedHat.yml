@@ -1,5 +1,17 @@
 ---
 
+- name: install epel
+  yum:
+    pkg=epel-release
+    state=latest
+  when: ansible_os_distribution == 'CentOS'
+
+- name: install openstack-kilo rdo base pkg
+  yum:
+    pkg="http://rdo.fedorapeople.org/openstack-kilo/rdo-release-kilo.rpm"
+    state=latest
+  when: osks_os == 'kilo'
+
 - name: install pkgs
   yum:
     pkg={{item}}
@@ -7,10 +19,22 @@
   with_items:
     - openstack-keystone
     - mod_wsgi
-    - mod_ssl
     - python-openstackclient
+
+- name: install mod_ssl
+  yum:
+    name=mod_ssl
+    state={{httpd_pkg_state}}
+  when: httpd_ssl is defined and httpd_ssl
+
+- name: install memcached
+  yum:
+    name={{item}}
+    state={{memcached_pkg_state}}
+  with_items:
     - memcached
     - python-memcached
+  when: osks_memcached
 
 - name: keystone.conf
   template:
@@ -35,9 +59,36 @@
   when: httpd_pkg_name is defined
   notify: svc restart httpd
 
+- name: keystone-manage db_sync
+  shell: "su -s /bin/sh -c "keystone-manage db_sync" keystone"
+
+- name: create cgi-bin
+  file:
+    path=/var/www/cgi-bin/keystone
+    state=directory
+    mode=0755
+
+- name: add keystone stub to cgi-bin
+  template:
+    src=keystone.py.j2
+    dest=/var/www/cgi-bin/keystone/{{item}}
+    owner=keystone
+    group=keystone
+    mode=0755
+  with_items:
+    - main
+    - admin
+
+- name: memcached start, enable
+  service:
+    name={{memcached_svc_name}}
+    state={{memcached_svc_state}}
+    enabled={{memcached_svc_enabled}}
+  when: osks_memcached
+
 - name: httpd start, enable
   service:
-    name={{httpd_pkg_name}}
+    name={{httpd_svc_name}}
     state={{httpd_svc_state}}
     enabled={{httpd_svc_enabled}}
   when: httpd_pkg_name is defined
